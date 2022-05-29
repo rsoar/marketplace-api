@@ -1,7 +1,6 @@
-import { IQueries } from "./IQueries";
-
-export interface IRepository<T, K> {
-  getQuerySQL: (keys?: K) => IQueries;
-  setObject: (item: any) => T;
-  mapObjects: (item: any[]) => T[];
+export interface IRepository<T> {
+  getItem: (id: number) => Promise<T[]>;
+  getItems: () => Promise<T[]>;
+  objectSet: (v: any) => T;
+  mapObjects: (items: any[]) => T[];
 }
