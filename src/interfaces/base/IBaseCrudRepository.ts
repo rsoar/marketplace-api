@@ -1,4 +1,4 @@
 export interface IBaseCrudService<T, K> {
-  getItems: () => Promise<any>;
-  insertItem: (item: K) => void;
+  list: () => Promise<any>;
+  insert: (item: K) => void;
 }

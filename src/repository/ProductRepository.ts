@@ -7,8 +7,8 @@ export class ProductRepository implements IRepository<IProduct, InsertProduct> {
     const _selectItems = "SELECT * FROM produtos";
 
     const _insertItem = {
-      query: "INSERT INTO produtos (nome, descricao, preco, vendedor, quantidade) VALUES(?, ?, ?, ?, ?)",
-      values: v ? [v.name, v.description, v.price, v.seller, v.count] : [""],
+      query: "INSERT INTO produtos (nome, descricao, categoria, preco, vendedor, quantidade) VALUES(?, ?, ?, ?, ?)",
+      values: v ? Object.values(v) : [""],
     };
 
     return {
@@ -25,6 +25,7 @@ export class ProductRepository implements IRepository<IProduct, InsertProduct> {
       count: v.quantidade,
       seller: v.vendedor,
       rate: v.avaliacao,
+      category: v.categoria,
     };
   }
 

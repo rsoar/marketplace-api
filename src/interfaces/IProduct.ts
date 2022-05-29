@@ -6,6 +6,7 @@ export interface IProductRaw {
   descricao: string;
   avaliacao: number;
   vendedor: string;
+  categoria: string;
 }
 
 export interface IProduct {
@@ -15,6 +16,7 @@ export interface IProduct {
   seller: string;
   rate: number;
   price: number;
+  category: string;
   count: number;
 }
 

@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import router from "./routes/routes";
 import { database } from "./database/config";
+import homeRoutes from "./routes/Home";
 
 export const app = express();
 
@@ -20,4 +20,4 @@ app.use(express.json()); // middleware to format the body request in JSON format
 app.use(cors()); // open ports for application
 
 // routes
-app.use("/api", router);
+app.use("/api", homeRoutes);

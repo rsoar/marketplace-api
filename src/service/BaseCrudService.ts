@@ -10,14 +10,14 @@ export class BaseCrudService<T, K> implements IBaseCrudService<T, K> {
     this._repository = repository;
   }
 
-  async getItems() {
+  async list() {
     const _db = await this._db;
     const query = this._repository.getQuerySQL().selectItems;
     const [rows] = await _db.query(query);
     return rows;
   }
 
-  async insertItem(_v: K) {
+  async insert(_v: K) {
     const _db = await this._db;
     const [query, values] = this._repository.getQuerySQL(_v).insertItem;
     await _db.query(query, values);
