@@ -1,11 +1,12 @@
 import express from "express";
 import cors from "cors";
-import { database } from "./database/config";
+import { database } from "./config/database";
 import homeRoutes from "./routes/Home";
+import signRoutes from "./routes/SignUp";
 
 export const app = express();
 
-const connect = async () => {
+(async () => {
   try {
     await database.connect();
   } catch (err) {
@@ -13,11 +14,11 @@ const connect = async () => {
   } finally {
     app.emit("db connected");
   }
-};
-connect();
+})();
 
 app.use(express.json()); // middleware to format the body request in JSON format
 app.use(cors()); // open ports for application
 
 // routes
 app.use("/api", homeRoutes);
+app.use("/", signRoutes);

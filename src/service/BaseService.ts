@@ -1,8 +1,5 @@
-import { IRepository } from "../interfaces/base/IRepository";
-
-interface IBaseService<T> {
-  getItem(id: number): any;
-}
+import { IBaseService } from "../interface/base/IBaseService";
+import { IRepository } from "../interface/base/IRepository";
 
 export class BaseService<T> implements IBaseService<T> {
   private _repository: IRepository<T>;
