@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { IController } from "src/interface/base/IController";
 import { IUser } from "../interface/IUser";
-import { SignUpService } from "../service/SignInService";
+import { SignUpService } from "../service/SignUpService";
 
 export class SignUpController implements IController {
   async index(_: Request, res: Response) {
