@@ -13,19 +13,20 @@ export class SignUpService implements ISignUpService {
   }
 
   async create(data: IUser) {
+    if (Object.values(data).map((m) => !!m).includes(false))
+      throw new HttpError(400, "Fields empty");
+
     if (data.email != data.confirmacaoEmail)
       throw new HttpError(400, "E-mail must be equal to confirmation e-mail");
 
     if (data.senha != data.confirmacaoSenha)
-      throw new HttpError(
-        400,
-        "Password must be equal to confirmation password"
-      );
+      throw new HttpError(400, "Password must be equal to confirmation password");
 
     const regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
     const isValidEmail = regex.test(data.email);
 
-    if (!isValidEmail) throw new HttpError(400, "Invalid e-mail");
+    if (!isValidEmail)
+      throw new HttpError(400, "Invalid e-mail");
 
     if (!!(await this._repository.getUserByEmail(data.email)).length)
       throw new HttpError(400, "This e-mail is already in use");

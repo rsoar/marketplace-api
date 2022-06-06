@@ -3,6 +3,8 @@ import cors from "cors";
 import { database } from "./config/database";
 import homeRoutes from "./routes/Home";
 import signRoutes from "./routes/SignUp";
+import signInRoute from "./routes/SignIn";
+import cartRoute from "./routes/Cart";
 
 export const app = express();
 
@@ -22,3 +24,5 @@ app.use(cors()); // open ports for application
 // routes
 app.use("/api", homeRoutes);
 app.use("/", signRoutes);
+app.use(cartRoute);
+app.use("/", signInRoute);
