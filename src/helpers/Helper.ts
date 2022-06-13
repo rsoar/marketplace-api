@@ -1,7 +1,8 @@
-import { IGenericMethod } from "../interface/base/IGenericMethod";
+import { IHelper } from "../interface/base/IHelper";
 
-export class GenericMethod<T> implements IGenericMethod<T> {
-  objectSet(target: any, keys: Array<keyof T>): T | null {
+class Helper<T> implements IHelper<T> {
+  objectSet(target: any, keys: Array<keyof T>): T {
+    if (!target) return {} as T;
     const _values = Object.values(target);
     return Object.assign(
       {},
@@ -16,3 +17,5 @@ export class GenericMethod<T> implements IGenericMethod<T> {
     return target.map((m: any) => this.objectSet(m, keys));
   }
 }
+
+export const helper: IHelper<any> = new Helper();

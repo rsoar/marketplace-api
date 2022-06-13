@@ -2,7 +2,7 @@ require("dotenv").config();
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { IAuth, Token } from "../interface/base/IAuh";
-import { HttpError } from "../helpers/HttpError";
+import { HttpError } from "../errors/HttpError";
 
 export class Auth implements IAuth {
   private _token: string | undefined;

@@ -1,26 +1,23 @@
 import { Connection } from "mysql2/promise";
 import { IUserRepository } from "../interface/base/IUserRepository";
-import { database } from "../config/database";
 import { IUser } from "../interface/IUser";
-import { GenericMethod } from "../helpers/GenericMethod";
+import { IDatabase } from "../interface/base/IDatabase";
+import { IHelper } from "../interface/base/IHelper";
 
 export class UserRepository implements IUserRepository {
-  private readonly _db: Promise<Connection>;
-  private _generic: GenericMethod<IUser>;
-
-  constructor() {
-    this._db = database.connect();
-    this._generic = new GenericMethod();
-  }
+  constructor(
+    private readonly _db: IDatabase<Connection>,
+    private _helper: IHelper<IUser>
+  ) {}
 
   async getUserByEmail(email: string): Promise<IUser[]> {
-    const db = await this._db;
-    const [result]: any = await db.query(
+    const db = await this._db.connect();
+    const [result] = await db.query(
       "SELECT * FROM usuarios WHERE email = ?",
       email
     );
 
-    return this._generic.mapObjects(result, [
+    return this._helper.mapObjects(result, [
       "id",
       "nome",
       "sobrenome",
@@ -29,14 +26,21 @@ export class UserRepository implements IUserRepository {
     ]);
   }
 
-  async getUserById(id: number) {
-    const db = await this._db;
+  async getUserById(id: number): Promise<IUser[]> {
+    const db = await this._db.connect();
     const [result] = await db.query("SELECT * FROM usuarios WHERE id = ?", id);
-    return result;
+
+    return this._helper.mapObjects(result, [
+      "id",
+      "nome",
+      "sobrenome",
+      "email",
+      "senha",
+    ]);
   }
 
-  async createUser(data: IUser) {
-    const db = await this._db;
+  async createUser(data: IUser): Promise<void> {
+    const db = await this._db.connect();
     await db.query(
       "INSERT INTO usuarios (nome, sobrenome, email, senha) VALUES (?, ?, ?, ?)",
       [data.nome, data.sobrenome, data.email, data.senha]
